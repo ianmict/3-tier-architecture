@@ -193,3 +193,9 @@ resource "aws_security_group_egress_rule" "db-tier-egress" {
     Name = "db-tier-ingress"
   }
 }
+
+//EC2
+
+resource "aws_instance" "fe-1" {
+  ami = 
+}
