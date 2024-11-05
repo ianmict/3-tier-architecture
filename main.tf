@@ -164,8 +164,32 @@ resource "aws_security_group_egress_rule" "logic-tier-egress" {
   ip_protocol = "tcp"
   from_port = 3306
   to_port = 3306
+
+  tags = {
+    Name = "logic-tier-egress"
+  }
 }
 
-resource "aws_security_group_ingress_rule" "logic-tier-ingress" {
-  security_group_id = aws_security_group.logic-tier-sg.id
+resource "aws_security_group_ingress_rule" "db-tier-ingress" {
+  security_group_id = aws_security_group.db-tier-sg.id
+  cidr_block = ["10.0.3.0/24", "10.0.4.0/24"]
+  ip_protocol = "tcp"
+  from_port = 3306
+  to_port = 3306
+
+  tags = {
+    Name = "db-tier-ingress"
+  }
+}
+
+resource "aws_security_group_egress_rule" "db-tier-egress" {
+  security_group_id = aws_security_group.db-tier-sg.id
+  cidr_block = ["10.0.3.0/24", "10.0.4.0/24"]
+  ip_protocol = "tcp"
+  from_port = 3306
+  to_port = 3306
+
+  tags = {
+    Name = "db-tier-ingress"
+  }
 }
