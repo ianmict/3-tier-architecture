@@ -126,9 +126,46 @@ resource "aws_security_group_ingress_rule" "front-end-ingress" {
   security_group_id = aws_security_group.front-end-sg.id
   cidr_block = "0.0.0.0/0"
   ip_protocol = "-1"
+  from_port = 80
+  to_port = 80
+
+  tags = {
+    Name = "front-end-ingress"
+  }
 }
 
 resource "aws_security_group_egress_rule" "front-end-egress" {
   security_group_id = aws_security_group.front-end-sg.id
-  
+  cidr_blocks = ["10.0.3.0/24", "10.0.4.0/24"]
+  ip_protocol = "tcp"
+  from_port = 80
+  to_port = 80
+
+  tags = {
+    Name = "front-end-egress"
+  }
+}
+
+resource "aws_security_group_ingress_rule" "logic-tier-ingress" {
+  security_group_id = aws_security_group.logic-tier-sg.id
+  cidr_block = ["10.0.1.0/24", "10.0.2.0/24"]
+  ip_protocol = "tcp"
+  from_port = 80
+  to_port = 80
+
+  tags = {
+    Name = "logic-tier-ingress"
+  }
+}
+
+resource "aws_security_group_egress_rule" "logic-tier-egress" {
+  security_group_id = aws_security_group.logic-tier-sg.id
+  cidr_block = ["10.0.5.0/24", "10.0.6.0/24"]
+  ip_protocol = "tcp"
+  from_port = 3306
+  to_port = 3306
+}
+
+resource "aws_security_group_ingress_rule" "logic-tier-ingress" {
+  security_group_id = aws_security_group.logic-tier-sg.id
 }
